@@ -9,7 +9,7 @@ export function ShoppingSection() {
   const [sel, setSel] = useState<Product | null>(null);
   const price = (p: Product) => `৳${fmtNum(p.discount ? Math.round(p.price * (1 - p.discount / 100)) : p.price, lang)}`;
   return (
-    <section className="panel p-4 md:p-5">
+    <section className="py-5">
       <SectionHeader title={t("shopping")} tag={<DemoTag label={t("illustrative")} />} />
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         {products.map((p) => (

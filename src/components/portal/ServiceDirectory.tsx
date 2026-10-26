@@ -6,7 +6,7 @@ import { services, categories } from "@/data/services";
 import { StatusBadge } from "./StatusBadge";
 import { useOpenService } from "./QuickServices";
 
-export function ServiceDirectory() {
+export function ServiceDirectory({ compact = false }: { compact?: boolean }) {
   const { t, lang } = useI18n();
   const open = useOpenService();
   const [q, setQ] = useState("");
@@ -37,7 +37,7 @@ export function ServiceDirectory() {
       ) : groups.map(({ c, items }) => (
         <section key={c.id} className="mt-6">
           <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-primary">{c[lang]}</h2>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className={compact ? "grid grid-cols-2 gap-2 sm:grid-cols-3" : "grid gap-3 sm:grid-cols-2 lg:grid-cols-4"}>
             {items.map((x) => {
               const I = x.icon;
               const body = (
@@ -48,10 +48,10 @@ export function ServiceDirectory() {
                   </div>
                   <h3 className="mt-3 font-semibold">{lang === "bn" ? x.bn : x.en}</h3>
                   <p className="text-xs text-muted-foreground">{lang === "bn" ? x.en : x.bn}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{lang === "bn" ? x.descBn : x.descEn}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{compact ? null : lang === "bn" ? x.descBn : x.descEn}</p>
                 </>
               );
-              const cls = "panel block p-4 text-left transition-colors hover:border-primary";
+              const cls = compact ? "panel block p-3 text-left" + " transition-colors hover:border-primary" : "panel block p-4 text-left transition-colors hover:border-primary";
               return x.to && x.status !== "soon"
                 ? <Link key={x.id} to={x.to} className={cls}>{body}</Link>
                 : <button key={x.id} onClick={() => open(x)} className={cls}>{body}</button>;

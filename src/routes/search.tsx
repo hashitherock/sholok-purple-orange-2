@@ -1,7 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Info, SearchX } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import { MainSearch } from "@/components/portal/MainSearch";
 import { Tabs } from "@/components/portal/ui";
 import { news, blogs, products, newsCats, blogCats, fmtAgo, fmtNum, toBn } from "@/data/content";
 
@@ -46,8 +45,7 @@ function SearchPage() {
   return (
     <div className="container-portal py-6">
       <div className="mx-auto max-w-3xl">
-        <MainSearch initial={q} compact />
-        <p className="mt-3 flex items-center gap-2 rounded-lg bg-primary-soft px-3 py-2 text-xs text-primary-dark"><Info className="h-4 w-4 shrink-0" />{t("demoSearch")}</p>
+        <p className=" flex items-center gap-2 rounded-lg bg-primary-soft px-3 py-2 text-xs text-primary-dark"><Info className="h-4 w-4 shrink-0" />{t("demoSearch")}</p>
         <div className="mt-4">
           <Tabs items={TABS.map((k) => ({ id: k, label: tabLabels[k][lang] }))} value={tab} onChange={(v) => nav({ search: { q, tab: v as Tab } })} />
         </div>
