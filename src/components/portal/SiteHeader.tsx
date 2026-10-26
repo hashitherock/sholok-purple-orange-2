@@ -1,29 +1,34 @@
 import { useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { Menu, X, UserRound, Globe } from "lucide-react";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { Menu, UserRound, Globe, LayoutGrid, Bell } from "lucide-react";
 import { useI18n, type Lang } from "@/lib/i18n";
 import { SholokLogo } from "./SholokLogo";
 import { SignInDialog } from "./SignInDialog";
-import { Button } from "@/components/ui/button";
+import { MainSearch } from "./MainSearch";
+import { QuickServices } from "./QuickServices";
+import { ServiceDirectory } from "./ServiceDirectory";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
 export function LanguageSwitcher() {
   const { lang, setLang } = useI18n();
   const opts: { id: Lang; label: string }[] = [
     { id: "bn", label: "বাংলা" },
-    { id: "en", label: "English" },
+    { id: "en", label: "EN" },
   ];
   return (
-    <div role="group" aria-label="Language" className="inline-flex items-center rounded-full border bg-background p-0.5 text-xs">
-      <Globe className="mx-1.5 h-3.5 w-3.5 text-muted-foreground" aria-hidden />
-      {opts.map((o) => (
-        <button
-          key={o.id}
-          onClick={() => setLang(o.id)}
-          aria-pressed={lang === o.id}
-          className={`rounded-full px-2.5 py-1 transition-colors ${lang === o.id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-primary"}`}
-        >
-          {o.label}
-        </button>
+    <div role="group" aria-label="Language" className="inline-flex items-center gap-0.5 text-xs">
+      <Globe className="mr-1 h-3.5 w-3.5 text-muted-foreground" aria-hidden />
+      {opts.map((o, i) => (
+        <span key={o.id} className="flex items-center">
+          {i > 0 && <span className="mx-1 h-2.5 w-px bg-border" aria-hidden />}
+          <button
+            onClick={() => setLang(o.id)}
+            aria-pressed={lang === o.id}
+            className={`px-0.5 transition-colors ${lang === o.id ? "font-semibold text-primary" : "text-muted-foreground hover:text-foreground"}`}
+          >
+            {o.label}
+          </button>
+        </span>
       ))}
     </div>
   );
@@ -31,8 +36,10 @@ export function LanguageSwitcher() {
 
 export function SiteHeader() {
   const { t } = useI18n();
-  const [open, setOpen] = useState(false);
+  const [menu, setMenu] = useState(false);
   const [signIn, setSignIn] = useState(false);
+  const loc = useRouterState({ select: (s) => s.location });
+  const q = loc.pathname === "/search" ? String((loc.search as { q?: string }).q ?? "") : "";
   const links = [
     { to: "/about" as const, label: t("about") },
     { to: "/services" as const, label: t("services") },
@@ -40,45 +47,58 @@ export function SiteHeader() {
   ];
   return (
     <header className="border-b bg-background">
-      <div className="container-portal flex h-14 items-center justify-between gap-4">
-        <SholokLogo size="sm" />
-        <nav className="hidden items-center gap-5 text-sm md:flex">
-          {links.map((l) => (
-            <Link key={l.to} to={l.to} className="text-muted-foreground hover:text-primary" activeProps={{ className: "text-primary font-semibold" }}>
-              {l.label}
-            </Link>
-          ))}
-          <LanguageSwitcher />
-          <Button size="sm" onClick={() => setSignIn(true)}>
-            <UserRound className="h-4 w-4" /> {t("myAccount")}
-          </Button>
-        </nav>
-        <button
-          className="rounded-md p-2 text-foreground hover:bg-accent md:hidden"
-          aria-label={t("menu")}
-          aria-expanded={open}
-          onClick={() => setOpen((o) => !o)}
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </div>
-      {open && (
-        <div className="animate-in slide-in-from-top-2 fade-in border-t md:hidden">
-          <nav className="container-portal flex flex-col gap-1 py-3">
-            {[{ to: "/" as const, label: t("home") }, ...links].map((l) => (
-              <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="rounded-md px-3 py-2 hover:bg-accent hover:text-primary">
-                {l.label}
-              </Link>
+      {/* A. Utility row */}
+      <div className="container-portal flex h-10 items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-3">
+          <button onClick={() => setMenu(true)} aria-label={t("allServices")} className="-ml-1.5 rounded p-1.5 text-foreground hover:bg-muted">
+            <Menu className="h-4 w-4" />
+          </button>
+          <nav className="hidden items-center gap-3 text-muted-foreground sm:flex">
+            {links.map((l) => (
+              <Link key={l.to} to={l.to} className="hover:text-foreground" activeProps={{ className: "font-semibold text-primary" }}>{l.label}</Link>
             ))}
-            <div className="flex items-center justify-between px-3 pt-2">
-              <LanguageSwitcher />
-              <Button size="sm" onClick={() => { setOpen(false); setSignIn(true); }}>
-                {t("myAccount")}
-              </Button>
-            </div>
           </nav>
         </div>
-      )}
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <button onClick={() => setSignIn(true)} className="relative hidden rounded p-1 text-muted-foreground hover:text-foreground sm:block" aria-label="Notifications">
+            <Bell className="h-4 w-4" />
+            <span className="absolute right-0.5 top-0.5 h-1.5 w-1.5 rounded-full bg-brand-accent" aria-hidden />
+          </button>
+          <button onClick={() => setSignIn(true)} className="inline-flex items-center gap-1 rounded-md border px-2 py-1 font-medium text-foreground hover:border-primary hover:text-primary">
+            <UserRound className="h-3.5 w-3.5" /> {t("myAccount")}
+          </button>
+        </div>
+      </div>
+
+      {/* B. Search row */}
+      <div className="container-portal flex flex-col items-center gap-3 py-4 md:flex-row md:justify-center md:gap-6 md:py-6">
+        <SholokLogo size="md" />
+        <div className="w-full md:max-w-[720px] md:flex-1">
+          <MainSearch initial={q} />
+        </div>
+        <div className="hidden w-[118px] lg:block" aria-hidden />
+      </div>
+
+      {/* C. Service shortcut row */}
+      <div className="border-t">
+        <div className="container-portal flex items-center gap-2">
+          <div className="min-w-0 flex-1"><QuickServices /></div>
+          <button onClick={() => setMenu(true)} className="flex shrink-0 flex-col items-center gap-1 px-2 py-2.5 text-xs text-muted-foreground hover:text-primary">
+            <LayoutGrid className="h-[22px] w-[22px]" strokeWidth={1.7} />
+            <span>{t("allServices")}</span>
+          </button>
+        </div>
+      </div>
+
+      <Sheet open={menu} onOpenChange={setMenu}>
+        <SheetContent side="left" className="w-full overflow-y-auto sm:max-w-2xl">
+          <SheetHeader><SheetTitle className="text-primary">{t("allServices")}</SheetTitle></SheetHeader>
+          <div className="px-4 pb-6" onClick={(e) => { if ((e.target as HTMLElement).closest("a")) setMenu(false); }}>
+            <ServiceDirectory compact />
+          </div>
+        </SheetContent>
+      </Sheet>
       <SignInDialog open={signIn} onOpenChange={setSignIn} />
     </header>
   );

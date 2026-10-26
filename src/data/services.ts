@@ -16,7 +16,7 @@ export interface Service {
   icon: LucideIcon;
   category: ServiceCategory;
   status: ServiceStatus;
-  to?: "/search" | "/news" | "/blog" | "/services";
+  to?: "/" | "/search" | "/news" | "/blog" | "/services";
   shortcut?: number;
 }
 
