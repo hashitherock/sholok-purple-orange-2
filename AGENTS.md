@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep portal presentation in shared header/module components and semantic global CSS tokens; this preserves the same compact visual system on every route.
+- Determine selected shortcut identity from its dedicated route, not shared homepage targets; multiple preview services point to the homepage.
