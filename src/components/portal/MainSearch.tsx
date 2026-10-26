@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Search, X, Mic, Clock, TrendingUp } from "lucide-react";
+import { Search, X, Mic, Clock } from "lucide-react";
 import { toast } from "sonner";
 import { useI18n } from "@/lib/i18n";
-import { trending } from "@/data/content";
+import { Button } from "@/components/ui/button";
 
 const KEY = "sholok-recent";
 
@@ -21,7 +21,7 @@ export function useRecent() {
 }
 
 export function MainSearch({ initial = "", compact = false, autoFocus = false }: { initial?: string; compact?: boolean; autoFocus?: boolean }) {
-  const { t, lang } = useI18n();
+  const { t } = useI18n();
   const nav = useNavigate();
   const [q, setQ] = useState(initial);
   const [focus, setFocus] = useState(false);
@@ -44,7 +44,7 @@ export function MainSearch({ initial = "", compact = false, autoFocus = false }:
       <form
         role="search"
         onSubmit={(e) => { e.preventDefault(); go(q); }}
-        className={`flex items-center gap-2 rounded-2xl border-2 border-primary bg-background pl-4 transition-shadow focus-within:shadow-search ${compact ? "h-12" : "h-[54px] md:h-[60px]"}`}
+        className={`flex items-center gap-2 rounded-full border border-primary bg-background pl-4 transition-shadow focus-within:shadow-search ${compact ? "h-11" : "h-12 md:h-[50px]"}`}
       >
         <Search className="h-5 w-5 shrink-0 text-primary" aria-hidden />
         <input
@@ -58,50 +58,38 @@ export function MainSearch({ initial = "", compact = false, autoFocus = false }:
           className="h-full min-w-0 flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground md:text-lg"
         />
         {q && (
-          <button type="button" onClick={() => { setQ(""); ref.current?.focus(); }} aria-label={t("clear")} className="rounded-full p-1.5 text-muted-foreground hover:bg-muted">
+          <Button variant="ghost" type="button" onClick={() => { setQ(""); ref.current?.focus(); }} aria-label={t("clear")} className="rounded-full p-1.5 text-muted-foreground hover:bg-muted">
             <X className="h-4 w-4" />
-          </button>
+          </Button>
         )}
-        <button type="button" onClick={() => toast(t("voiceSoon"))} aria-label={t("voiceSoon")} className="hidden rounded-full p-1.5 text-muted-foreground hover:text-primary sm:block">
+        <Button variant="ghost" type="button" onClick={() => toast(t("voiceSoon"))} aria-label={t("voiceSoon")} className="hidden rounded-full p-1.5 text-muted-foreground hover:text-primary sm:block">
           <Mic className="h-5 w-5" />
-        </button>
-        <button type="submit" className="relative flex h-full items-center gap-2 rounded-r-[14px] border-l border-primary bg-primary px-4 font-semibold text-primary-foreground transition-colors hover:bg-primary-dark md:px-6">
+        </Button>
+        <Button variant="ghost" type="submit" className="relative h-full shrink-0 rounded-r-full px-4 text-primary hover:bg-primary-bg md:px-5 [&_svg]:size-5">
           <Search className="h-5 w-5" />
           <span className="sr-only">{t("search")}</span>
           <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-brand-accent" aria-hidden />
-        </button>
+        </Button>
       </form>
 
       {focus && recent.length > 0 && (
         <div className="absolute inset-x-0 top-full z-30 mt-2 panel p-3 text-left">
           <div className="mb-2 flex items-center justify-between text-xs text-muted-foreground">
             <span>{t("recent")}</span>
-            <button onMouseDown={(e) => e.preventDefault()} onClick={clear} className="hover:text-primary">{t("clearAll")}</button>
+            <Button variant="ghost" onMouseDown={(e) => e.preventDefault()} onClick={clear} className="hover:text-primary">{t("clearAll")}</Button>
           </div>
           <ul>
             {recent.map((r) => (
               <li key={r}>
-                <button onMouseDown={(e) => e.preventDefault()} onClick={() => go(r)} className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-primary">
+                <Button variant="ghost" onMouseDown={(e) => e.preventDefault()} onClick={() => go(r)} className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-primary">
                   <Clock className="h-3.5 w-3.5 text-muted-foreground" /> {r}
-                </button>
+                </Button>
               </li>
             ))}
           </ul>
         </div>
       )}
 
-      {false && (
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm">
-          <span className="inline-flex items-center gap-1 font-semibold text-brand-accent">
-            <TrendingUp className="h-4 w-4" /> {t("trending")}
-          </span>
-          {trending.map((tr) => (
-            <button key={tr.bn} onClick={() => go(tr[lang])} className="rounded-full border bg-background px-3 py-1 text-muted-foreground transition-colors hover:border-primary hover:text-primary">
-              {tr[lang]}
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

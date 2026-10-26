@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, UserRound, Globe, LayoutGrid, Bell } from "lucide-react";
@@ -21,13 +22,13 @@ export function LanguageSwitcher() {
       {opts.map((o, i) => (
         <span key={o.id} className="flex items-center">
           {i > 0 && <span className="mx-1 h-2.5 w-px bg-border" aria-hidden />}
-          <button
+          <Button variant="ghost"
             onClick={() => setLang(o.id)}
             aria-pressed={lang === o.id}
             className={`px-0.5 transition-colors ${lang === o.id ? "font-semibold text-primary" : "text-muted-foreground hover:text-foreground"}`}
           >
             {o.label}
-          </button>
+          </Button>
         </span>
       ))}
     </div>
@@ -48,11 +49,11 @@ export function SiteHeader() {
   return (
     <header className="border-b bg-background">
       {/* A. Utility row */}
-      <div className="container-portal flex h-10 items-center justify-between gap-3 text-xs">
+      <div className="container-portal flex h-9 items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-3">
-          <button onClick={() => setMenu(true)} aria-label={t("allServices")} className="-ml-1.5 rounded p-1.5 text-foreground hover:bg-muted">
+          <Button variant="ghost" onClick={() => setMenu(true)} aria-label={t("allServices")} className="-ml-1.5 rounded p-1.5 text-foreground hover:bg-muted">
             <Menu className="h-4 w-4" />
-          </button>
+          </Button>
           <nav className="hidden items-center gap-3 text-muted-foreground sm:flex">
             {links.map((l) => (
               <Link key={l.to} to={l.to} className="hover:text-foreground" activeProps={{ className: "font-semibold text-primary" }}>{l.label}</Link>
@@ -61,33 +62,33 @@ export function SiteHeader() {
         </div>
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
-          <button onClick={() => setSignIn(true)} className="relative hidden rounded p-1 text-muted-foreground hover:text-foreground sm:block" aria-label="Notifications">
+          <Button variant="ghost" onClick={() => setSignIn(true)} className="relative hidden rounded p-1 text-muted-foreground hover:text-foreground sm:block" aria-label="Notifications">
             <Bell className="h-4 w-4" />
             <span className="absolute right-0.5 top-0.5 h-1.5 w-1.5 rounded-full bg-brand-accent" aria-hidden />
-          </button>
-          <button onClick={() => setSignIn(true)} className="inline-flex items-center gap-1 rounded-md border px-2 py-1 font-medium text-foreground hover:border-primary hover:text-primary">
+          </Button>
+          <Button variant="ghost" onClick={() => setSignIn(true)} className="inline-flex items-center gap-1 rounded-md border px-2 py-1 font-medium text-foreground hover:border-primary hover:text-primary">
             <UserRound className="h-3.5 w-3.5" /> {t("myAccount")}
-          </button>
+          </Button>
         </div>
       </div>
 
       {/* B. Search row */}
-      <div className="container-portal flex flex-col items-center gap-3 py-4 md:flex-row md:justify-center md:gap-6 md:py-6">
+      <div className="container-portal flex flex-col items-center gap-2 py-2.5 sm:flex-row sm:justify-center sm:gap-5 sm:py-3">
         <SholokLogo size="md" />
-        <div className="w-full md:max-w-[720px] md:flex-1">
+        <div className="w-full min-w-0 sm:max-w-[740px] sm:flex-1">
           <MainSearch initial={q} />
         </div>
-        <div className="hidden w-[118px] lg:block" aria-hidden />
+        <div className="hidden w-[140px] lg:block" aria-hidden />
       </div>
 
       {/* C. Service shortcut row */}
-      <div className="border-t">
+      <div className="border-t border-border/60">
         <div className="container-portal flex items-center gap-2">
           <div className="min-w-0 flex-1"><QuickServices /></div>
-          <button onClick={() => setMenu(true)} className="flex shrink-0 flex-col items-center gap-1 px-2 py-2.5 text-xs text-muted-foreground hover:text-primary">
-            <LayoutGrid className="h-[22px] w-[22px]" strokeWidth={1.7} />
+          <Button variant="ghost" onClick={() => setMenu(true)} className="flex shrink-0 flex-col items-center gap-1 h-auto rounded-none px-2 py-2 text-[11px] [&_svg]:size-5 text-muted-foreground hover:text-primary">
+            <LayoutGrid className="h-5 w-5" strokeWidth={1.7} />
             <span>{t("allServices")}</span>
-          </button>
+          </Button>
         </div>
       </div>
 

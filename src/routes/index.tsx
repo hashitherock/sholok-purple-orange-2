@@ -11,6 +11,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Sholok (sholok.com) is a Bengali-first portal for search, news, blogs and everyday services." },
       { property: "og:title", content: "Sholok — Everything You Need, All in One Place" },
       { property: "og:description", content: "A Bengali-first portal for search, news, blogs and everyday services." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
@@ -18,11 +20,11 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="bg-surface">
-      <div className="container-portal grid gap-6 py-5 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-8">
-        <div className="min-w-0 divide-y rounded-lg border bg-background px-4 md:px-5">
+    <div className="bg-background">
+      <div className="container-portal grid items-start gap-4 py-4 md:grid-cols-[minmax(0,2fr)_minmax(240px,1fr)] xl:gap-6">
+        <div className="min-w-0 divide-y">
           <NewsSection />
-          <BlogFeed />
+          <BlogFeed compact />
           <ShoppingSection />
         </div>
         <PortalSidebar />
