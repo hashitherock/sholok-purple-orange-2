@@ -10,8 +10,8 @@ type Tab = (typeof TABS)[number];
 
 export const Route = createFileRoute("/search")({
   validateSearch: (s: Record<string, unknown>): { q: string; tab: Tab } => ({
-    q: typeof s.q === "string" ? s.q : "",
-    tab: TABS.includes(s.tab as Tab) ? (s.tab as Tab) : "all",
+    q: typeof s["q"] === "string" ? s["q"] : "",
+    tab: TABS.includes(s["tab"] as Tab) ? (s["tab"] as Tab) : "all",
   }),
   head: () => ({
     meta: [
