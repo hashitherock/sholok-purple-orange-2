@@ -26,7 +26,7 @@ export function QuickServices() {
           </>
         );
         return s.to && s.status !== "soon" ? (
-          <Link key={s.id} to={s.to} className={cls} activeOptions={{ exact: true }} activeProps={{ className: "text-primary font-semibold" }}>{inner}</Link>
+          <Link key={s.id} to={s.to} className={cls}>{inner}</Link>
         ) : (
           <button key={s.id} onClick={() => open(s)} className={cls} aria-label={`${label} (coming soon)`}>{inner}</button>
         );
