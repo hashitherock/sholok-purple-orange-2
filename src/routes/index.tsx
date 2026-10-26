@@ -1,8 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useI18n } from "@/lib/i18n";
-import { SholokLogo } from "@/components/portal/SholokLogo";
-import { MainSearch } from "@/components/portal/MainSearch";
-import { QuickServices } from "@/components/portal/QuickServices";
 import { NewsSection } from "@/components/portal/NewsSection";
 import { BlogFeed } from "@/components/portal/BlogFeed";
 import { ShoppingSection } from "@/components/portal/ShoppingSection";
@@ -21,27 +17,16 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { t } = useI18n();
   return (
-    <>
-      <section className="border-b bg-primary-bg">
-        <div className="container-portal flex flex-col items-center py-8 md:py-12">
-          <SholokLogo size="lg" />
-          <p className="mt-2 text-sm text-muted-foreground">{t("tagline")}</p>
-          <div className="mt-6 w-full max-w-3xl"><MainSearch /></div>
+    <div className="bg-surface">
+      <div className="container-portal grid gap-6 py-5 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-8">
+        <div className="min-w-0 divide-y rounded-lg border bg-background px-4 md:px-5">
+          <NewsSection />
+          <BlogFeed />
+          <ShoppingSection />
         </div>
-      </section>
-      <div className="container-portal py-5">
-        <div className="panel p-3"><QuickServices /></div>
-        <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_300px]">
-          <div className="min-w-0 space-y-5">
-            <NewsSection />
-            <BlogFeed />
-            <ShoppingSection />
-          </div>
-          <PortalSidebar />
-        </div>
+        <PortalSidebar />
       </div>
-    </>
+    </div>
   );
 }

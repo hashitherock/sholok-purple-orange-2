@@ -25,7 +25,7 @@ export function SiteFooter() {
         </nav>
       </div>
       <div className="border-t py-4 text-center text-xs text-muted-foreground">
-        © {lang === "bn" ? year.toString().replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[+d]) : year} Sholok · sholok.com — {t("rights")}
+        © {lang === "bn" ? year.toString().replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯".charAt(+d)) : year} Sholok · sholok.com — {t("rights")}
       </div>
     </footer>
   );

@@ -11,7 +11,7 @@ export function NewsSection({ full = false }: { full?: boolean }) {
   const list = news.filter((n) => n.cat === cat);
   const [feat, ...rest] = list;
   return (
-    <section className="panel p-4 md:p-5">
+    <section className="py-5">
       <SectionHeader title={t("highlights")} tag={<DemoTag label={t("demoNews")} />}
         action={!full && <Link to="/news" className="inline-flex items-center text-sm text-primary hover:underline">{t("viewAllNews")}<ChevronRight className="h-4 w-4" /></Link>} />
       <Tabs items={newsCats.map((c) => ({ id: c.id, label: c[lang] }))} value={cat} onChange={setCat} />

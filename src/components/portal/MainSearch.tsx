@@ -44,7 +44,7 @@ export function MainSearch({ initial = "", compact = false, autoFocus = false }:
       <form
         role="search"
         onSubmit={(e) => { e.preventDefault(); go(q); }}
-        className={`flex items-center gap-2 rounded-2xl border-2 border-primary bg-background pl-4 shadow-search transition-shadow focus-within:ring-4 focus-within:ring-primary-soft ${compact ? "h-12" : "h-14 md:h-16"}`}
+        className={`flex items-center gap-2 rounded-2xl border-2 border-primary bg-background pl-4 transition-shadow focus-within:shadow-search ${compact ? "h-12" : "h-[54px] md:h-[60px]"}`}
       >
         <Search className="h-5 w-5 shrink-0 text-primary" aria-hidden />
         <input
@@ -65,9 +65,9 @@ export function MainSearch({ initial = "", compact = false, autoFocus = false }:
         <button type="button" onClick={() => toast(t("voiceSoon"))} aria-label={t("voiceSoon")} className="hidden rounded-full p-1.5 text-muted-foreground hover:text-primary sm:block">
           <Mic className="h-5 w-5" />
         </button>
-        <button type="submit" className="relative mr-1.5 flex h-[calc(100%-12px)] items-center gap-2 rounded-xl bg-primary px-4 font-semibold text-primary-foreground transition-colors hover:bg-primary-dark md:px-6">
-          <Search className="h-4 w-4 md:hidden" />
-          <span className="hidden md:inline">{t("search")}</span>
+        <button type="submit" className="relative flex h-full items-center gap-2 rounded-r-[14px] border-l border-primary bg-primary px-4 font-semibold text-primary-foreground transition-colors hover:bg-primary-dark md:px-6">
+          <Search className="h-5 w-5" />
+          <span className="sr-only">{t("search")}</span>
           <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-brand-accent" aria-hidden />
         </button>
       </form>
@@ -90,7 +90,7 @@ export function MainSearch({ initial = "", compact = false, autoFocus = false }:
         </div>
       )}
 
-      {!compact && (
+      {false && (
         <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm">
           <span className="inline-flex items-center gap-1 font-semibold text-brand-accent">
             <TrendingUp className="h-4 w-4" /> {t("trending")}

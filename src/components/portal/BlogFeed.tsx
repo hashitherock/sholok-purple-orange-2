@@ -44,7 +44,7 @@ export function BlogFeed() {
   const { ids, toggle } = useBookmarks();
   const list = blogs.filter((b) => cat === "all" || b.cat === cat);
   return (
-    <section className="panel p-4 md:p-5">
+    <section className="py-5">
       <SectionHeader title={t("discover")} tag={<DemoTag label={t("sample")} />} />
       <Tabs items={[{ id: "all", label: t("all") }, ...blogCats.map((c) => ({ id: c.id, label: c[lang] }))]} value={cat} onChange={(v) => { setCat(v); setCount(6); }} />
       <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

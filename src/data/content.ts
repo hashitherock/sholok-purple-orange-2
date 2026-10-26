@@ -85,7 +85,7 @@ export const markets = [
 ];
 
 const bnDigits = "০১২৩৪৫৬৭৮৯";
-export const toBn = (v: string | number) => String(v).replace(/\d/g, (d) => bnDigits[+d]);
+export const toBn = (v: string | number) => String(v).replace(/\d/g, (d) => bnDigits.charAt(+d));
 export const fmtNum = (v: number, lang: "bn" | "en") => {
   const s = v.toLocaleString("en-IN");
   return lang === "bn" ? toBn(s) : s;
