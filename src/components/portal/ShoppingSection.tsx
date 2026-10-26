@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { products, fmtNum, toBn, type Product } from "@/data/content";
@@ -9,20 +10,20 @@ export function ShoppingSection() {
   const [sel, setSel] = useState<Product | null>(null);
   const price = (p: Product) => `৳${fmtNum(p.discount ? Math.round(p.price * (1 - p.discount / 100)) : p.price, lang)}`;
   return (
-    <section className="py-5">
+    <section className="py-4">
       <SectionHeader title={t("shopping")} tag={<DemoTag label={t("illustrative")} />} />
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {products.map((p) => (
-          <button key={p.id} onClick={() => setSel(p)} className="group text-left">
-            <div className="relative overflow-hidden rounded-xl bg-muted">
-              <img src={p.img} alt={p[lang]} width={400} height={400} loading="lazy" className="aspect-square w-full object-cover transition-transform group-hover:scale-[1.03]" />
+          <Button variant="ghost" key={p.id} onClick={() => setSel(p)} className="group block h-auto min-w-0 whitespace-normal rounded-none p-0 text-left hover:bg-transparent">
+            <div className="relative overflow-hidden rounded bg-muted">
+              <img src={p.img} alt={p[lang]} width={400} height={400} loading="lazy" className="aspect-[4/3] w-full object-cover transition-transform group-hover:scale-[1.03]" />
               {p.discount && <span className="absolute left-2 top-2 rounded bg-brand-accent px-1.5 py-0.5 text-[11px] font-bold text-primary-foreground">-{lang === "bn" ? toBn(p.discount) : p.discount}%</span>}
             </div>
             <p className="mt-2 text-xs text-muted-foreground">{lang === "bn" ? p.cat : p.catEn}</p>
             <p className="line-clamp-1 text-sm font-medium group-hover:text-primary">{p[lang]}</p>
             <p className="text-sm font-bold">{price(p)}</p>
-            <span className="text-xs text-primary">{t("viewDetails")} →</span>
-          </button>
+            <span className="text-[11px] text-primary">{t("viewDetails")} →</span>
+          </Button>
         ))}
       </div>
       <Dialog open={!!sel} onOpenChange={(o) => !o && setSel(null)}>

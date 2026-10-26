@@ -46,21 +46,21 @@
 
 :root {
   /* Official Sholok palette */
-  --sholok-primary: oklch(0.4 0.2 305);        /* #5D0096 */
+  --sholok-primary: #5D0096;        /* #5D0096 */
   --sholok-primary-dark: oklch(0.31 0.16 305); /* #41006A */
   --sholok-primary-light: oklch(0.95 0.025 310); /* #F3E8FA */
   --sholok-primary-bg: oklch(0.982 0.01 310);  /* #FAF6FD */
-  --sholok-accent: oklch(0.57 0.22 29);        /* #D31710 */
+  --sholok-accent: #D31710;        /* #D31710 */
   --sholok-accent-light: oklch(0.95 0.025 20); /* #FDEBEA */
-  --sholok-background: oklch(1 0 0);
-  --sholok-surface: oklch(0.977 0.004 286);    /* #F7F7FA */
-  --sholok-text: oklch(0.25 0.015 290);        /* #22212A */
-  --sholok-text-muted: oklch(0.56 0.015 290);  /* #73717D */
-  --sholok-border: oklch(0.92 0.01 300);       /* #E8E5EE */
+  --sholok-background: #FFFFFF;
+  --sholok-surface: #F5F5F7;    /* #F7F7FA */
+  --sholok-text: #222222;        /* #22212A */
+  --sholok-text-muted: #666666;  /* #73717D */
+  --sholok-border: #E5E5E5;       /* #E8E5EE */
   --sholok-success: oklch(0.55 0.12 160);      /* #16865B */
   --sholok-disabled: oklch(0.72 0.013 300);    /* #AAA6B0 */
 
-  --radius: 0.75rem;
+  --radius: 0.5rem;
   --background: var(--sholok-background);
   --foreground: var(--sholok-text);
   --card: var(--sholok-background);
@@ -68,7 +68,7 @@
   --popover: var(--sholok-background);
   --popover-foreground: var(--sholok-text);
   --primary: var(--sholok-primary);
-  --primary-foreground: oklch(1 0 0);
+  --primary-foreground: #FFFFFF;
   --secondary: var(--sholok-primary-light);
   --secondary-foreground: var(--sholok-primary-dark);
   --muted: var(--sholok-surface);
@@ -76,7 +76,7 @@
   --accent: var(--sholok-primary-bg);
   --accent-foreground: var(--sholok-primary);
   --destructive: var(--sholok-accent);
-  --destructive-foreground: oklch(1 0 0);
+  --destructive-foreground: #FFFFFF;
   --border: var(--sholok-border);
   --input: var(--sholok-border);
   --ring: var(--sholok-primary);
@@ -112,4 +112,11 @@
   background: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: 8px;
+}
+
+@layer base {
+  body { margin: 0; }
+  button, a, input { -webkit-tap-highlight-color: transparent; }
+  img { max-width: 100%; }
+  h1, h2, h3, h4 { letter-spacing: 0; }
 }
