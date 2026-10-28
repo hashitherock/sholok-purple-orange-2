@@ -9,13 +9,15 @@ export const Route = createFileRoute("/services")({
       { name: "description", content: "Browse all 20 Sholok services: search, news, blog, mail, maps and more." },
       { property: "og:title", content: "All Services — Sholok" },
       { property: "og:description", content: "Browse all Sholok services and their availability." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => {
     const { t } = useI18n();
     return (
-      <div className="container-portal py-8">
-        <h1 className="mb-5 text-2xl font-bold text-primary md:text-3xl">{t("allServices")}</h1>
+      <div className="container-portal py-5">
+        <h1 className="mb-4 text-xl font-bold text-primary">{t("allServices")}</h1>
         <ServiceDirectory />
       </div>
     );

@@ -18,6 +18,8 @@ export const Route = createFileRoute("/search")({
       { name: "description", content: "Demo search across Sholok's sample news, blogs and products." },
       { property: "og:title", content: "Search — Sholok" },
       { property: "og:description", content: "Demo search across Sholok's sample content." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: SearchPage,

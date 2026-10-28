@@ -53,3 +53,7 @@ export const services: Service[] = [
 ];
 
 export const allServicesShortcut = { id: "all", en: "All Services", bn: "সকল সেবা", icon: LayoutGrid };
+
+export function isServiceSelected(service: Service, pathname: string): boolean {
+  return service.status === "active" && service.to !== undefined && service.to !== "/" && service.to === pathname;
+}

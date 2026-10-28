@@ -9,6 +9,8 @@ export const Route = createFileRoute("/news")({
       { name: "description", content: "Today's highlights by category on Sholok News (sample content)." },
       { property: "og:title", content: "News — Sholok" },
       { property: "og:description", content: "Category-wise highlights on Sholok News (sample content)." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (
