@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useI18n } from "@/lib/i18n";
 import { services, isServiceSelected, type Service } from "@/data/services";
@@ -12,6 +12,7 @@ export function useOpenService() {
 export function QuickServices() {
   const { lang } = useI18n();
   const open = useOpenService();
+  const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const items = [...services].sort((a, b) => (a.shortcut ?? 100) - (b.shortcut ?? 100));
   const cls = "group relative flex h-[54px] min-w-[54px] shrink-0 flex-col items-center justify-center gap-1 rounded-none border-b-2 border-transparent px-2 py-1.5 text-[11px] font-medium text-foreground transition-colors hover:bg-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-ring";
@@ -27,10 +28,10 @@ export function QuickServices() {
             {s.status === "soon" && <span className="absolute right-2 top-1.5 h-1 w-1 rounded-full bg-disabled" aria-hidden />}
           </>
         );
-        return s.to && s.status !== "soon" ? (
+        return s.to && s.status === "active" ? (
           <Link key={s.id} to={s.to} aria-current={isServiceSelected(s, pathname) ? "page" : undefined} className={`${cls} ${isServiceSelected(s, pathname) ? "border-primary bg-primary-bg text-primary" : ""}`}>{inner}</Link>
         ) : (
-          <Button variant="ghost" key={s.id} onClick={() => open(s)} className={cls} aria-label={`${label} (${s.status === "preview" ? "preview" : "coming soon"})`}>{inner}</Button>
+          <Button variant="ghost" key={s.id} onClick={() => s.to && s.status === "preview" ? navigate({ to: s.to }) : open(s)} className={cls} aria-label={`${label} (${s.status === "preview" ? "preview" : "coming soon"})`}>{inner}</Button>
         );
       })}
     </nav>

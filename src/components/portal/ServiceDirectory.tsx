@@ -5,6 +5,7 @@ import { useI18n } from "@/lib/i18n";
 import { services, categories } from "@/data/services";
 import { StatusBadge } from "./StatusBadge";
 import { useOpenService } from "./QuickServices";
+import { Button } from "@/components/ui/button";
 
 export function ServiceDirectory({ compact = false }: { compact?: boolean }) {
   const { t, lang } = useI18n();
@@ -17,17 +18,17 @@ export function ServiceDirectory({ compact = false }: { compact?: boolean }) {
   return (
     <div>
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
-        <label className="flex h-11 flex-1 items-center gap-2 rounded-xl border bg-background px-3 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary-soft">
+        <label className="flex h-11 min-w-0 flex-1 items-center gap-2 rounded-lg border bg-background px-3 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary-soft">
           <Search className="h-4 w-4 text-muted-foreground" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("searchServices")} aria-label={t("searchServices")} className="flex-1 bg-transparent outline-none" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("searchServices")} aria-label={t("searchServices")} className="min-w-0 flex-1 bg-transparent outline-none" />
         </label>
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {[{ id: "all", en: "All", bn: "সব" }, ...categories].map((c) => (
-          <button key={c.id} onClick={() => setCat(c.id)} aria-pressed={cat === c.id}
-            className={`rounded-full border px-3 py-1 text-sm transition-colors ${cat === c.id ? "border-primary bg-primary text-primary-foreground" : "bg-background text-muted-foreground hover:border-primary hover:text-primary"}`}>
+          <Button variant="ghost" key={c.id} onClick={() => setCat(c.id)} aria-pressed={cat === c.id}
+            className={`h-9 max-w-full whitespace-normal rounded border px-2 py-1 text-xs transition-colors ${cat === c.id ? "border-primary bg-primary text-primary-foreground hover:bg-primary-dark hover:text-primary-foreground" : "bg-background text-muted-foreground hover:border-primary hover:text-primary"}`}>
             {c[lang]}
-          </button>
+          </Button>
         ))}
       </div>
       {groups.length === 0 ? (
@@ -43,7 +44,7 @@ export function ServiceDirectory({ compact = false }: { compact?: boolean }) {
               const body = (
                 <>
                   <div className="flex items-start justify-between">
-                    <span className={`flex h-10 w-10 items-center justify-center rounded-xl ${x.status === "soon" ? "bg-muted text-disabled" : "bg-primary-soft text-primary"}`}><I className="h-5 w-5" /></span>
+                    <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded ${x.status === "soon" ? "bg-muted text-disabled" : "bg-primary-soft text-primary"}`}><I className="h-5 w-5" /></span>
                     <StatusBadge status={x.status} />
                   </div>
                   <h3 className="mt-3 font-semibold">{lang === "bn" ? x.bn : x.en}</h3>
@@ -54,7 +55,7 @@ export function ServiceDirectory({ compact = false }: { compact?: boolean }) {
               const cls = compact ? "panel block p-3 text-left" + " transition-colors hover:border-primary" : "panel block p-4 text-left transition-colors hover:border-primary";
               return x.to && x.status !== "soon"
                 ? <Link key={x.id} to={x.to} className={cls}>{body}</Link>
-                : <button key={x.id} onClick={() => open(x)} className={cls}>{body}</button>;
+                : <Button variant="ghost" key={x.id} onClick={() => open(x)} className={`${cls} h-auto min-w-0 whitespace-normal`}>{body}</Button>;
             })}
           </div>
         </section>
