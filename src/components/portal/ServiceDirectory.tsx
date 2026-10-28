@@ -43,7 +43,7 @@ export function ServiceDirectory({ compact = false }: { compact?: boolean }) {
               const I = x.icon;
               const body = (
                 <>
-                  <div className="flex items-start justify-between">
+                  <div className="flex flex-wrap items-start justify-between gap-1.5">
                     <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded ${x.status === "soon" ? "bg-muted text-disabled" : "bg-primary-soft text-primary"}`}><I className="h-5 w-5" /></span>
                     <StatusBadge status={x.status} />
                   </div>
